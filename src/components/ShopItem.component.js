@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
-
 import EditItem from './edit-item.component';
 import Item from './item.component';
 

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnText: {
-    color: 'darkslateblue',
+    color: 'blue',
     fontSize: 20,
     textAlign: 'center',
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextInput, View, StyleSheet, Alert} from 'react-native';
+import {TextInput, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 export default ({item: {id, text, ...others}, onSubmitUpdate, onDisable}) => {
@@ -21,7 +21,7 @@ export default ({item: {id, text, ...others}, onSubmitUpdate, onDisable}) => {
         size={20}
         onPress={() => {
           console.log({id, textUpdate, ...others});
-          if (!!textUpdate) {
+          if (textUpdate) {
             onSubmitUpdate({id, text: textUpdate, ...others});
           } else {
             onSubmitUpdate({id, text, ...others});
