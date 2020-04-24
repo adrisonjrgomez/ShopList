@@ -4,7 +4,7 @@ import {TouchableOpacity, StyleSheet} from 'react-native';
 import EditItem from './edit-item.component';
 import Item from './item.component';
 
-export default ({item, onDelete, onEdit}) => {
+export default ({item}) => {
   const [editing, setEditing] = useState(false);
   const enableEditing = () => setEditing(true);
   const disableEditing = () => setEditing(false);
@@ -12,13 +12,9 @@ export default ({item, onDelete, onEdit}) => {
   return (
     <TouchableOpacity style={styles.shopItem}>
       {editing ? (
-        <EditItem
-          item={item}
-          onDisable={disableEditing}
-          onSubmitUpdate={onEdit}
-        />
+        <EditItem item={item} onDisable={disableEditing} />
       ) : (
-        <Item item={item} enableEditing={enableEditing} onDelete={onDelete} />
+        <Item item={item} enableEditing={enableEditing} />
       )}
     </TouchableOpacity>
   );

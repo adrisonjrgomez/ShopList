@@ -1,13 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {ItemsContext} from '../context/item/item.context/';
+
 import {TextInput, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-export default ({item: {id, text, ...others}, onSubmitUpdate, onDisable}) => {
+export default ({item: {id, text, ...others}, onDisable}) => {
   const [textUpdate, setText] = useState('');
-  const editText = value => {
-    console.log(value, text);
-    setText(value);
+  const {editItem} = useContext(ItemsContext);
+
+  const editText = value => setText(value);
+
+  const onSubmit = () => {
+    if (textUpdate) {
+      editItem({id, text: textUpdate, ...others});
+    } else {
+      editItem({id, text, ...others});
+    }
+    setText('');
+    onDisable();
   };
+
   return (
     <View style={styles.editItem}>
       <TextInput
@@ -15,21 +27,7 @@ export default ({item: {id, text, ...others}, onSubmitUpdate, onDisable}) => {
         placeholder={text}
         onChangeText={editText}
       />
-      <Icon
-        name="check"
-        color="green"
-        size={20}
-        onPress={() => {
-          console.log({id, textUpdate, ...others});
-          if (textUpdate) {
-            onSubmitUpdate({id, text: textUpdate, ...others});
-          } else {
-            onSubmitUpdate({id, text, ...others});
-          }
-          setText('');
-          onDisable();
-        }}
-      />
+      <Icon name="check" color="green" size={20} onPress={onSubmit} />
     </View>
   );
 };
