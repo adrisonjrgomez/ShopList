@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {ItemsContext} from '../context/item/item.context';
 import {
   View,
   Text,
@@ -8,7 +9,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-export default ({onAdd}) => {
+export default () => {
+  const {addItem} = useContext(ItemsContext);
   const [text, setText] = useState('');
   const onChange = value => setText(value);
   return (
@@ -20,7 +22,7 @@ export default ({onAdd}) => {
       />
       <TouchableOpacity
         onPress={() => {
-          onAdd(text);
+          addItem(text);
           setText('');
         }}
         style={styles.buttonContainer}>
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnText: {
-    color: 'darkslateblue',
+    color: 'blue',
     fontSize: 20,
     textAlign: 'center',
     justifyContent: 'center',
