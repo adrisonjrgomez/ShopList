@@ -19,3 +19,15 @@ export const addItemToItems = (text, items, setItems) => {
     setItems([{id: items.length + 1, text}, ...items]);
   }
 };
+
+export const setDoneItemsToDoneItems = (
+  item,
+  doneItems,
+  setDoneItems,
+  items,
+  setItems,
+) => {
+  item.status = 1;
+  setItems(items.filter(itemLi => itemLi.id !== item.id));
+  setDoneItems([item, ...doneItems]);
+};

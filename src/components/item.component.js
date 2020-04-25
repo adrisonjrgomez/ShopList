@@ -3,12 +3,18 @@ import {ItemsContext} from '../context/item/item.context';
 import {Text, StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-export default ({item: {id, text}, enableEditing}) => {
-  const {deleteItem} = useContext(ItemsContext);
+export default ({item: {id, text, ...others}, enableEditing}) => {
+  const {deleteItem, setDoneItem} = useContext(ItemsContext);
   return (
     <View style={styles.item}>
       <Text>{text}</Text>
       <View style={styles.editing}>
+        <Icon
+          name="check"
+          size={20}
+          style={styles.icons}
+          onPress={() => setDoneItem({id, text, ...others})}
+        />
         <Icon
           style={styles.icons}
           name="edit"

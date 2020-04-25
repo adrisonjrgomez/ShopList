@@ -1,21 +1,24 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import {SafeAreaView, FlatList} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import Header from '../components/header.component';
-import ShopItem from '../components/ShopItem.component';
-import AddItem from '../components/add-item.component';
-import {ItemsContext} from '../context/item/item.context';
+
+import Pending from '../components/pending.component';
+import Done from '../components/done.component';
+
+const routes = {
+  pending: Pending,
+  done: Done,
+};
 
 const HomePage = () => {
-  const {items} = useContext(ItemsContext);
+  const [screen, setScreen] = useState('pending');
+  let CurrentComponent = routes[screen];
+  useEffect(() => {}, [screen, CurrentComponent]);
   return (
     <SafeAreaView>
-      <Header title="Shopping List" />
-      <AddItem />
-      <FlatList
-        data={items}
-        renderItem={({item}) => <ShopItem key={item.id} item={item} />}
-      />
+      <Header title="Shopping Lis" changeScreen={setScreen} />
+      <CurrentComponent />
     </SafeAreaView>
   );
 };
