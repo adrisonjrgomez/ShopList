@@ -1,20 +1,22 @@
 import React, {useContext} from 'react';
 import {ItemsContext} from '../context/item/item.context';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
+let color;
+
 export default ({item: {id, text, ...others}, enableEditing}) => {
-  const {deleteItem, setDoneItem} = useContext(ItemsContext);
+  const {setDoneItem} = useContext(ItemsContext);
+  color = 'white';
   return (
-    <View style={styles.item}>
+    <TouchableOpacity
+      style={[styles.item]}
+      onPress={() => {
+        setDoneItem({id, text, ...others});
+        color = 'green';
+      }}>
       <Text>{text}</Text>
-      <View style={styles.editing}>
-        <Icon
-          name="check"
-          size={20}
-          style={styles.icons}
-          onPress={() => setDoneItem({id, text, ...others})}
-        />
+      <TouchableOpacity style={styles.editing}>
         <Icon
           style={styles.icons}
           name="edit"
@@ -22,19 +24,14 @@ export default ({item: {id, text, ...others}, enableEditing}) => {
           color="blue"
           onPress={() => enableEditing()}
         />
-        <Icon
-          name="remove"
-          color="firebrick"
-          size={20}
-          onPress={() => deleteItem(id)}
-        />
-      </View>
-    </View>
+      </TouchableOpacity>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   item: {
+    backgroundColor: color,
     width: 390,
     alignItems: 'center',
     justifyContent: 'space-between',
