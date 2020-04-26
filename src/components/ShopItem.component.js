@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
@@ -8,18 +8,21 @@ import Item from './item.component';
 
 import {ItemsContext} from '../context/item/item.context';
 
-const Width = Dimensions.get('screen').width;
+// const Width = Dimensions.get('screen').width;
 
 export default ({item}) => {
   const {deleteItem} = useContext(ItemsContext);
   const [editing, setEditing] = useState(false);
+
   const enableEditing = () => setEditing(true);
   const disableEditing = () => setEditing(false);
-  const renderLeft = () => {
+
+  const renderLeft = (progress, dragX) => {
+
     return (
-      <View style={styles.deleteItem}>
+      <Animated.View style={styles.deleteItem}>
         <Icon name="trash" size={20} color="white" />
-      </View>
+      </Animated.View>
     );
   };
 
@@ -29,7 +32,7 @@ export default ({item}) => {
         deleteItem(item.id);
       }}
       renderLeftActions={renderLeft}
-      containerStyle={styles.shopItem}>
+      childrenContainerStyle={styles.shopItem}>
       {editing ? (
         <EditItem item={item} onDisable={disableEditing} />
       ) : (
@@ -39,7 +42,6 @@ export default ({item}) => {
   );
 };
 
-// TODO: FIX A BUG SwipeContainer is over main container
 
 const styles = StyleSheet.create({
   shopItem: {
@@ -53,7 +55,9 @@ const styles = StyleSheet.create({
   },
   deleteItem: {
     backgroundColor: 'red',
-    width: Width * 0.25,
+    flex: 1,
     padding: 20,
+    justifyContent: 'center',
+    marginBottom: 10,
   },
 });
